@@ -2,7 +2,8 @@
 This is a Nodejs, Mongodb backend. 
 
 # project file structure
- 
+
+```
 |--- private
 |       |--- database
 |               |--- mongodbjs.js *mongodb configuration is included here*
@@ -20,7 +21,7 @@ This is a Nodejs, Mongodb backend.
 |--- package.json
 |
 |--- README.md
-
+```
 # run 
 1. `npm i` *This installs all the dependencies in package.json*
 2. `npm start` *Start the server on port 3001*
