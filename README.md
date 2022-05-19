@@ -22,6 +22,8 @@ This is a Nodejs, Mongodb backend.
 |
 |--- README.md
 ```
-# run 
+# install dependencies
 1. `npm i` *This installs all the dependencies in package.json*
+
+# run
 2. `npm start` *Start the server on port 3001*
