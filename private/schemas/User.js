@@ -2,17 +2,22 @@
 const mongoose = require('mongoose')
 
 const userSchema = new mongoose.Schema({
-    name:{
-        type: String,
+    status:{
+        type: Number,
+        required: false
+    },
+    profile_image: {
+        type: String, 
         required: false, 
-        min: 6, 
+        min: 2,
         max: 255
     },
     email: {
         type: String, 
         required: true, 
         max: 1024,
-        min: 6
+        min: 6, 
+        // unique: true, 
     },
     password: {
         type: String, 
@@ -20,6 +25,46 @@ const userSchema = new mongoose.Schema({
         max: 1024, 
         min: 6
     },
+    usertype: { //0 = normal user
+        type: Number, 
+        required: false
+    },
+    has_shop: {
+        type: Number,
+        required: false,
+    }, 
+    personal: {
+        name: String, 
+        phone: Number, 
+        gender: String, 
+        address: String, 
+        occupation: String, 
+        dob: Date,
+        ghana_card_no: String,
+        height: Number,
+        weight: Number, 
+        date: {
+            type: Date, 
+            default: Date.now
+        } 
+    },
+    health: {
+        pin: String, 
+        blood_group: String, 
+        genotype: String, 
+        alergies: Array, 
+        medical_id_no: String, 
+        pulse_rate: Number, 
+        respiration_rate: Number, 
+        blood_pressure: String, 
+        temperature: Number, 
+        nhis_no: String,
+        date: {
+            type: Date, 
+            default: Date.now
+        }
+    },
+    education: [mongoose.SchemaTypes.ObjectId],
     date: {
         type: Date, 
         default: Date.now
