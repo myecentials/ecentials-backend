@@ -1,13 +1,13 @@
 const router = require('express').Router()
 const dotenv = require('dotenv') //saves secrets like passwords, API keys etc in a virtual env
-const User = require('../private/schemas/User')
+const User = require('../../private/schemas/User')
 const bcrypt = require('bcryptjs/dist/bcrypt') //encrypting the password
 var mongoose = require('mongoose')
 
 const jwt = require('jsonwebtoken') //for jwt webtoken to check if user is logged in 
 
 //encrypt password 
-const {encryptPassword} = require('../private/helpers/functions')
+const {encryptPassword} = require('../../private/helpers/functions')
 
 //validations are added to this file using the holi/joi library
 const {registerValidation, emailValidation, passwordValidation} = require('./validation/auth_validation')

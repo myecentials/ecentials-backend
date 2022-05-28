@@ -1,9 +1,9 @@
 const router = require('express').Router()
 var mongoose = require('mongoose')
-const verify = require('../verifyToken') //checks if the user has a jwt token
+const verify = require('../../verifyToken') //checks if the user has a jwt token
 
-var Notification = require('../private/schemas/Notification')
-var AccessAttempts = require('../private/schemas/AccessAttempts')
+var Notification = require('../../private/schemas/Notification')
+var AccessAttempts = require('../../private/schemas/AccessAttempts')
 
 
 //add notifications
@@ -33,6 +33,20 @@ router.post('/fetch-notification', verify, async (req, res) => {
         const notifications = await Notification.find({user_id: user_id, status: 0})
 
         if(notifications) return res.json({status: 200, message: notifications})
+    }
+    catch(e){
+        res.json({status: 400, message: e})
+    }
+})
+
+//mark notification as delivered
+router.post('/mark-notification-as-delivered', verify, async (req, res) => {
+    var user_id = req.user._id
+    var notification_id = req.body.id
+
+    try{
+        const marked = await Notification.updateOne({_id: notification_id}, {$inc:{status: 1}})
+        if(marked) return res.json({status: 200, message: "Delivered"})
     }
     catch(e){
         res.json({status: 400, message: e})
