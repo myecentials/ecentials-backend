@@ -5,7 +5,6 @@ const verify = require('../../verifyToken') //checks if the user has a jwt token
 var Notification = require('../../private/schemas/Notification')
 var AccessAttempts = require('../../private/schemas/AccessAttempts')
 
-
 //add notifications
 router.post('/add-notification', verify, async (req, res) => {
     var user_id = req.user._id
