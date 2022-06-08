@@ -113,36 +113,51 @@ router.post('/add-school-details', verify, async (req, res) => {
     var user_id = req.user._id
     var schoolname = req.body.school_name
 
-    const educationalInfo = new EducationalInfo({
-        school_name: schoolname,
-        user_id: user_id,
-        course: req.body.course,
-        duration: req.body.duration,
-        highest_level: req.body.highest_level
-    })
+    const education = {
+        "school_name": schoolname,
+        "course": req.body.course,
+        "duration": req.body.duration,
+        "highest_level": req.body.highest_level
+    }
 
     try {
-        const checkIfExists = await EducationalInfo.findOne({
-            school_name: schoolname,
-            user_id: user_id
-        })
-        if (checkIfExists != null) return res.json({
+        const schoolDataExists = await User.findOne({
+            education: {
+                $elemMatch: {
+                    school_name: schoolname,
+                    course: req.body.course
+                }
+            }
+        });
+        
+        if (schoolDataExists != null) return res.json({
             status: 400,
             message: "Record already exists"
         })
 
-        const saveEducation = await educationalInfo.save()
-        if (saveEducation) return res.json({
-            status: 200,
-            message: "Educational Info added successfully",
-            user: user_id
+        const addEducationDetails = await User.updateOne({
+            _id: user_id
+        }, {
+            $push: {
+                education: education
+            }
         })
-    } catch (err) {
+        
+        if (!addEducationDetails) return res.json({
+            status: 400,
+            message: "Something went wrong"
+        })
+        
+        return res.json({
+            status: 200,
+            message: "Educational information added successfully",
+            user_id: req.user._id
+        })
+    } catch (error) {
         return res.json({
             status: 400,
-            message: err
+            message: error
         })
-
     }
 })
 
@@ -161,10 +176,10 @@ router.post('/edit-school-details', verify, async (req, res) => {
     }
 
     try {
-        const updateRecord = await EducationalInfo.updateOne({
-            _id: record_id
+        const updateRecord = await User.updateOne({
+            "education._id": record_id
         }, {
-            $set: educationalInfo
+            $set: { "education.$": educationalInfo }
         })
         if (updateRecord) return res.json({
             status: 200,
@@ -179,37 +194,41 @@ router.post('/edit-school-details', verify, async (req, res) => {
 })
 
 //fetch school details
-router.post('/fetch-school-details', verify, async (req, res) => {
+router.get('/fetch-school-details', verify, async (req, res) => {
     var user_id = req.user._id
-    const school_details = await EducationalInfo.find({
-        user_id: user_id
+    const user = await User.findOne({
+        _id: user_id
     })
 
-    if (!school_details) return res.json({
+    if (!user.education) return res.json({
         status: 400,
         message: "You have no school details"
     })
 
     return res.json({
         status: 200,
-        message: school_details
+        message: user.education
     })
 
 })
 
 //delete a school detail
-router.post('/delete-school-details', verify, async (req, res) => {
+router.delete('/delete-school-details', verify, async (req, res) => {
     var user_id = req.user._id
     var record_id = req.body.record_id
 
     try {
-        const removeRecord = await EducationalInfo.findOneAndRemove({
-            _id: record_id
+        const removeRecord = await User.updateOne({
+            "education._id": record_id
+        }, {
+            $pull: {education: { _id: record_id } }
         })
+
         if (!removeRecord) return res.json({
             status: 400,
             message: "Something went wrong. Try again later"
         })
+
         return res.json({
             status: 200,
             message: "Educational Info removed successfully"
