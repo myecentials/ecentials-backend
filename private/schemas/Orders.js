@@ -17,14 +17,6 @@ const ordersSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    date_created: {
-        type: Date,
-        default: Date.now
-    },
-    date_updated: {
-        type: Date,
-        default: Date.now
-    }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model("Orders", ordersSchema);
