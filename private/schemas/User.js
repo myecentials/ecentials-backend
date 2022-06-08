@@ -64,7 +64,25 @@ const userSchema = new mongoose.Schema({
             default: Date.now
         }
     },
-    education: [mongoose.SchemaTypes.ObjectId],
+    // education: [mongoose.SchemaTypes.ObjectId],
+    education: [{
+        school_name: {
+            type: String,
+            required: false
+        },
+        course: {
+            type: String,
+            required: false
+        },
+        duration: {
+            type: String,
+            required: false
+        },
+        highest_level: {
+            type: String,
+            required: false
+        }
+    }],
     date: {
         type: Date, 
         default: Date.now
