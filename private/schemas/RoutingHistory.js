@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const ordersSchema = new mongoose.Schema({
-    who_ordered: {
+const routingHistorySchema = new mongoose.Schema({
+    agent_id: {
         type: mongoose.SchemaTypes.ObjectId,
         required: true
     },
-    who_ordered_type: {
+    routing_type: {
         type: String,
         required: true
     },
@@ -13,30 +13,22 @@ const ordersSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    order_item_id: {
-        type: mongoose.SchemaTypes.ObjectId,
-        required: true
-    },
-    item_type: {
-        type: String,
-        required: true
-    },
-    quantity: {
+    origin_lat: {
         type: Number,
         required: true
     },
-    payment_method: {
-        type: String,
-        required: true
-    },
-    prize: {
+    origin_lng: {
         type: Number,
         required: true
     },
-    delivery_method: {
+    destination_lat: {
         type: Number,
         required: true
-    }
+    },
+    destination_lng: {
+        type: Number,
+        required: true
+    },
 }, { timestamps: true });
 
-module.exports = mongoose.model("Orders", ordersSchema);
+module.exports = mongoose.model("RoutingHistory", routingHistorySchema);
