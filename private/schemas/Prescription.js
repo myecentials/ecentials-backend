@@ -16,3 +16,5 @@ const prescriptionSchema = new mongoose.Schema({
         max: 255
     },
 }, { timestamps: true });
+
+module.exports = mongoose.model("Prescription", prescriptionSchema);
