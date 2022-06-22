@@ -251,10 +251,9 @@ router.post('/health-pin', verify, async (req, res) => {
         const checkIfExists = await User.findOne({
             _id: user_id
         }, {
-            "health.pin": encryptPassword(pin)
+            health: 1
         })
-        console.log(checkIfExists)
-        if (checkIfExists == null) {
+        if (checkIfExists.health.pin == null) {
             await User.updateOne({
                 _id: user_id
             }, {
