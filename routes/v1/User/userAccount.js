@@ -1,17 +1,16 @@
 const router = require('express').Router()
 var mongoose = require('mongoose')
 const bcrypt = require('bcryptjs/dist/bcrypt') //encrypting the password
-const verify = require('../../verifyToken') //checks if the user has a jwt token
-const User = require('../../private/schemas/User')
-const EducationalInfo = require('../../private/schemas/EducationalInfo')
+const verify = require('../../../verifyToken') //checks if the user has a jwt token
+const User = require('../../../private/schemas/User')
 
 const {
     encryptPassword
-} = require('../../private/helpers/functions')
+} = require('../../../private/helpers/functions')
 
 //this verifies using the token before any transaction is made. 
 //fetch personal details
-router.post('/fetch-personal-details', verify, async (req, res) => {
+router.get('/fetch-personal-details', verify, async (req, res) => {
     var user_id = req.user._id
     const isUserPresent = await User.findOne({
         _id: user_id
@@ -60,7 +59,7 @@ router.post('/addEdit-personal-details', verify, async (req, res) => {
 })
 
 //fetch health details
-router.post('/fetch-health-details', verify, async (req, res) => {
+router.get('/fetch-health-details', verify, async (req, res) => {
     var user_id = req.user._id
     const isUserPresent = await User.findOne({
         _id: user_id
