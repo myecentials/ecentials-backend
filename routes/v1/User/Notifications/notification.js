@@ -37,4 +37,19 @@ router.post('/add_notification_for_user', verify, async (req, res) => {
     }
 });
 
+
+// retrieve all notifications for a verified user
+router.get('/fetch-user-notifications', verify, async (req, res) => {
+    const user_id = req.user._id
+
+    try{
+        const notifications = await Notification.find({user_id: user_id, status: 0})
+
+        if(notifications) return res.status(200).json({ message: notifications })
+    }
+    catch(e){
+        res.status(400).json({ message: e })
+    }
+});
+
 module.exports = router;
