@@ -16,4 +16,4 @@ app.use(express.json())
 //Route middleware
 app.use('', routes)
 
-app.listen(process.env.PORT || 5000 , () => console.log('Server running on port 3001'))
+app.listen(process.env.PORT || 3001 , () => console.log('Server running on port 3001'))
