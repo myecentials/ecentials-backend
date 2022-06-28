@@ -9,7 +9,7 @@ router.get('', verify, async (req, res) => {
     const user_id = req.user._id;
 
     await Orders.find({}, {
-        user_id
+        who_ordered: user_id
     }, (err, result) => {
         if (err) {
             return res.status(400).json({message: "Failed to load orders."})
@@ -18,5 +18,21 @@ router.get('', verify, async (req, res) => {
     }).clone();
 });
 
+
+// list information about an order item for a verified user
+router.get('/order-item', verify, async (req, res) => {
+    user_id = req.user._id;
+    const { order_id } = req.body;
+
+    await Orders.findOne({
+        _id: order_id,
+        who_ordered: user_id, 
+    }, (err, result) => {
+        if (err) {
+            return res.status(400).json({message: 'Failed to load order item'});
+        }
+        return res.status(200).json({message: 'success', data: result});
+    });
+});
 
 module.exports = router;
