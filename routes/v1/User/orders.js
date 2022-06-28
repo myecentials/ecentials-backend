@@ -32,7 +32,7 @@ router.get('/order-item', verify, async (req, res) => {
             return res.status(400).json({message: 'Failed to load order item'});
         }
         return res.status(200).json({message: 'success', data: result});
-    });
+    }).clone();
 });
 
 module.exports = router;
