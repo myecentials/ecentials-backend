@@ -25,6 +25,11 @@ const notificationSchema = new mongoose.Schema({
     date: {
         type: Date, 
         default: Date.now
+    },
+    notification_type: {
+        type: String,
+        required: true,
+        default: 'user_specific'
     }
 }, { timestamps: true })
 
