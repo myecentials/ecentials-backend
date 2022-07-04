@@ -13,6 +13,6 @@ router.use('/api/v1/user/cart', require('./User/cart'))
 router.use('/api/v1/pharmacies', require('./Pharmacy/pharmacy'))
 
 // pescription related endpoints
-router.use('/api/v1/prescription', require('./Prescription/prescription'))
+router.use('/api/v1/prescriptions', require('./Prescription/prescription'))
 
 module.exports = router
