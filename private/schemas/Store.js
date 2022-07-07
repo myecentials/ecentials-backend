@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const storeSchema = new mongoose.Schema({
-    store_id: {
-        type: mongoose.SchemaTypes.ObjectId,
-        required: true
-    },
     user_id: {
         type: mongoose.SchemaTypes.ObjectId,
         required: true
@@ -31,7 +27,7 @@ const storeSchema = new mongoose.Schema({
     },
     is_verified: {
         type: Boolean,
-        required: true
+        default: false
     },
     respiration_rate: {
         type: Number,
