@@ -61,7 +61,13 @@ router.post('/login', async (req, res) => {
 
     //create and assign a token
     const token = jwt.sign({_id: user._id}, process.env.SECRET)
-    res.header('auth-token', token).send(token)
+    res.header('auth-token', token).json(
+        {
+            email,
+            token,
+            "id": user._id,
+        }
+    )
 })
 
 //FORGOT PASSWORD
