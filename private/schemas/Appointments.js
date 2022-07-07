@@ -18,9 +18,13 @@ const appointmentsSchema = new mongoose.Schema({
         required: true
     },
     status: {
-        type: Number,
-        required: false
+        type: String,
+        required: true
     },
+    appointment_type: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true })
 
 module.exports = mongoose.model("Appointments", appointmentsSchema);
