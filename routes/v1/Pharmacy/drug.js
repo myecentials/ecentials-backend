@@ -49,4 +49,22 @@ router.get('', verify, async (req, res) => {
     }).clone();
 });
 
+// search for a drug using name, manufacturer, description
+router.get('/drug-search', verify, async (req, res) => {
+    const { search_text } = req.body;
+
+    await Drug.find({ 
+        "$or": [
+            {name: { $regex: search_text }},
+            {description: { $regex: search_text }},
+            {manufacturer: { $regex: search_text }}
+        ]
+     }, { name: 1, prize: 1 }, (err, result) => {
+         if (err) {
+             return res.status(400).json({ message: 'Could not find drug. Try again later.'})
+         }
+         return res.status(200).json({ message: "success", data: result })
+     }).clone();
+});
+
 module.exports = router;
