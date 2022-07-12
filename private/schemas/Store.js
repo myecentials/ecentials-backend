@@ -6,7 +6,7 @@ const storeSchema = new mongoose.Schema({
         required: true
     },
     store_pin: {
-        type: Number,
+        type: String,
         required: true
     },
     name: {
@@ -28,10 +28,6 @@ const storeSchema = new mongoose.Schema({
     is_verified: {
         type: Boolean,
         default: false
-    },
-    respiration_rate: {
-        type: Number,
-        required: true
     },
     licence_no: {
         type: String,
