@@ -6,9 +6,10 @@ const verify = require('../../../verifyToken')
 // list all favourites for a verified user
 router.get('', verify , async (req, res) => {
     user_id = req.user._id;
+    const { favourite_type } = req.body;
 
-    await Favourites.find({}, {
-        user_id
+    await Favourites.find({
+        user_id, favourite_type
     }, (err, result) => {
         if (err) {
             return res.status(400).json({message: 'Failed to fetch user favourites'})
@@ -23,11 +24,11 @@ router.get('', verify , async (req, res) => {
 router.post('/add-favourite', verify, async (req, res) => {
     user_id = req.user._id;
     
-    const { favourite_type, item_id, date_favoured } = req.body;
+    const { favourite_type, item_id } = req.body;
 
     if (!!favourite_type && !!item_id) {
         await Favourites.create({
-            user_id, favourite_type, item_id, date_favoured
+            user_id, favourite_type, item_id
         }, (err, result) => {
             if (err) {
                 return res.status(400).json({message: 'Something went wrong'});
