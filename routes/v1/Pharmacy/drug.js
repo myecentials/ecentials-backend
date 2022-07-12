@@ -37,4 +37,16 @@ router.post('/add-new-drug', verify, async (req, res) => {
     }
 });
 
+// list all drugs associated to a particular pharmacy or shop
+router.get('', verify, async (req, res) => {
+    const { store_id } = req.body;
+
+    await Drug.find({ store_id }, (err, result) => {
+        if (err) {
+            return res.status(400).json({ message: 'Failed to retrieve drugs. Try again later.' });
+        }
+        return res.status(200).json({ message: "ok", data: result });
+    }).clone();
+});
+
 module.exports = router;
