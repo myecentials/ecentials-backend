@@ -81,13 +81,13 @@
 						"header": [
 							{
 								"key": "auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjlmZWQwYjhjNjAzZGI5MjJjMzNlY2IiLCJpYXQiOjE2NTU5MTc5NjV9._bx8tl26m4pceFBVQhpjGd3A8YGU1jrIbGB6AGq9Vvc",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"phone\": \"234567800000\",\n    \"height\": \"20\",\n    \"weight\": 70\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
