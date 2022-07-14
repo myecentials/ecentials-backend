@@ -89,7 +89,6 @@ router.post('/forgot-password', async (req, res) => {
 //RESET PASSWORD
 router.post('/reset-password', verify,  async (req, res) => {
     const user_id = req.user._id
-    var email = req.body.email
     var password = req.body.password
     var confirmPassword = req.body.confirmPassword
 
@@ -99,7 +98,7 @@ router.post('/reset-password', verify,  async (req, res) => {
     if(error) return res.json({status: 400, message: error.details[0].message})
 
     //change the password 
-    const updatePassword = await User.updateOne({email: email, _id: user_id}, {$set:{password: encryptPassword(confirmPassword)}})
+    const updatePassword = await User.updateOne({ _id: user_id }, {$set:{password: encryptPassword(confirmPassword)}})
     if(updatePassword) return res.json({status: 200, message:"Password reset completed"})
 })
 
