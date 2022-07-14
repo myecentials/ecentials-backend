@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const dotenv = require('dotenv') //saves secrets like passwords, API keys etc in a virtual env
+const { v4: uuid } = require('uuid')
+
 const User = require('../../../private/schemas/User')
 const bcrypt = require('bcryptjs/dist/bcrypt') //encrypting the password
 var mongoose = require('mongoose')
@@ -13,6 +15,8 @@ const {encryptPassword} = require('../../../private/helpers/functions')
 const {registerValidation, emailValidation, passwordValidation} = require('./validation/auth_validation')
 
 const verify = require('../../../verifyToken')
+const sendMail = require('../../../private/services/send_email')
+const RecoveryCode = require('../../../private/schemas/RecoveryCode')
 
 dotenv.config()
 
@@ -100,4 +104,30 @@ router.post('/reset-password', verify,  async (req, res) => {
 })
 
 
+// send email to user to start password reset process
+router.post('/recover_password', verify, async (req, res) => {
+    const user_id = req.user._id;
+    const { email } = req.body;
+    
+    let code = `${uuid()}`.substring(0, 6).toUpperCase()
+
+    if (email === '') {
+        return res.status(400).json({ message: 'user email not provided.' });
+    }
+
+    sendMail(email, code).then(result => {
+        // set the code sent to the user
+        // this will be validated against to check if user has permission to change
+        // password
+        RecoveryCode.create({ user_id, code }, (err, _) => {
+            if (err) {
+                res.status(400).json({ message: 'Something went wrong. Try again later' });
+            }
+            res.status(200).json({ message: 'A verification has been sent to your email.'});
+        });
+    }).catch(err => {
+        res.status(400).json({ message: "Could not send verification code. Try again later.",
+    data: err })
+    })
+});
 module.exports = router
