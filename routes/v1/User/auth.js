@@ -120,12 +120,12 @@ router.post('/recover_password', verify, async (req, res) => {
         // password
         RecoveryCode.create({ user_id, code }, (err, _) => {
             if (err) {
-                res.status(400).json({ message: 'Something went wrong. Try again later' });
+                return res.status(400).json({ message: 'Something went wrong. Try again later' });
             }
-            res.status(200).json({ message: 'A verification has been sent to your email.'});
+            return res.status(200).json({ message: 'A verification has been sent to your email.'});
         });
     }).catch(err => {
-        res.status(400).json({ message: "Could not send verification code. Try again later.",
+        return res.status(400).json({ message: "Could not send verification code. Try again later.",
     data: err })
     })
 });
