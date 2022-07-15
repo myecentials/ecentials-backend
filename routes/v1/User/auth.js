@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const dotenv = require('dotenv') //saves secrets like passwords, API keys etc in a virtual env
+const { v4: uuid } = require('uuid')
+
 const User = require('../../../private/schemas/User')
 const bcrypt = require('bcryptjs/dist/bcrypt') //encrypting the password
 var mongoose = require('mongoose')
@@ -13,6 +15,8 @@ const {encryptPassword} = require('../../../private/helpers/functions')
 const {registerValidation, emailValidation, passwordValidation} = require('./validation/auth_validation')
 
 const verify = require('../../../verifyToken')
+const sendMail = require('../../../private/services/send_email')
+const RecoveryCode = require('../../../private/schemas/RecoveryCode')
 
 dotenv.config()
 
@@ -86,7 +90,6 @@ router.post('/forgot-password', async (req, res) => {
 //RESET PASSWORD
 router.post('/reset-password', verify,  async (req, res) => {
     const user_id = req.user._id
-    var email = req.body.email
     var password = req.body.password
     var confirmPassword = req.body.confirmPassword
 
@@ -96,9 +99,66 @@ router.post('/reset-password', verify,  async (req, res) => {
     if(error) return res.json({status: 400, message: error.details[0].message})
 
     //change the password 
-    const updatePassword = await User.updateOne({email: email, _id: user_id}, {$set:{password: encryptPassword(confirmPassword)}})
+    const updatePassword = await User.updateOne({ _id: user_id }, {$set:{password: encryptPassword(confirmPassword)}})
     if(updatePassword) return res.json({status: 200, message:"Password reset completed"})
 })
 
+
+// send email to user to start password reset process
+router.post('/recover_password', verify, async (req, res) => {
+    const user_id = req.user._id;
+    const { email } = req.body;
+    
+    let code = `${uuid()}`.substring(0, 6).toUpperCase()
+
+    if (email === '') {
+        return res.status(400).json({ message: 'user email not provided.' });
+    }
+
+    sendMail(email, code).then(result => {
+        // set the code sent to the user
+        // this will be validated against to check if user has permission to change
+        // password
+        RecoveryCode.create({ user_id, code }, (err, _) => {
+            if (err) {
+                return res.status(400).json({ message: 'Something went wrong. Try again later' });
+            }
+            return res.status(200).json({ message: 'A verification has been sent to your email.'});
+        });
+    }).catch(err => {
+        return res.status(400).json({ message: "Could not send verification code. Try again later.",
+    data: err })
+    })
+});
+
+
+// verify password reset verification code sent to the user
+// to allow a user to change password.
+router.post('/verify_code', verify, async (req, res) => {
+    const  user_id  = req.user._id;
+
+    const { code } = req.body;
+    
+    const msInMinute = 60 * 1000;
+    const current_date = new Date();
+
+    await RecoveryCode.findOne({ user_id, code }, { createdAt: 1, _id: 0 } , (err, result) => {
+        if (err) {
+            return res.status(400).json({ message: "Could not verify code. Please try again"})
+        }
+        
+        // determine whether the code was sent over 60 mins before
+        // if so, the code is expired and hence cannot be used for the verification.
+        let code_date = new Date(result.createdAt)
+
+        let time_elapsed = current_date.getTime() - code_date.getTime();
+
+        if (Math.abs(time_elapsed / msInMinute) > 60) {
+            return res.status(400).json({ message: "Code has expired. Please try again"})
+        }
+
+        return res.status(200).json({ message: "success"});
+    }).clone();
+}); 
 
 module.exports = router

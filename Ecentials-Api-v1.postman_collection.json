@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"kumi@gmail.com\",\n    \"password\": \"KumiGuitar2016#\"\n}",
+							"raw": "{\n    \"email\": \"lateofrederick@yahoo.com\",\n    \"password\": \"kumiGuitar2016#\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -81,13 +81,13 @@
 						"header": [
 							{
 								"key": "auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjlmZWQwYjhjNjAzZGI5MjJjMzNlY2IiLCJpYXQiOjE2NTU5MTc5NjV9._bx8tl26m4pceFBVQhpjGd3A8YGU1jrIbGB6AGq9Vvc",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"phone\": \"234567800000\",\n    \"height\": \"20\",\n    \"weight\": 70\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -157,7 +157,7 @@
 						"header": [
 							{
 								"key": "auth-token",
-								"value": "{{auth-token}}",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
 								"type": "text"
 							}
 						],
@@ -582,7 +582,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"favourite_type\": \"hospital\",\n    \"item_id\": \"\"\n}",
+							"raw": "{\n    \"favourite_type\": \"pharmacy\",\n    \"item_id\": \"62c81cce8faa7ded917bd066\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -791,43 +791,6 @@
 					"response": []
 				},
 				{
-					"name": "user-reset-password",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "auth-token",
-								"value": "{{new-token}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\": \"kumi@gmail.com\",\n    \"password\": \"KumiGuitar2016#\",\n    \"confirmPassword\": \"KumiGuitar2016#\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3001/api/v1/user/reset-password",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3001",
-							"path": [
-								"api",
-								"v1",
-								"user",
-								"reset-password"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "all-pharmacies",
 					"request": {
 						"method": "GET",
@@ -927,6 +890,279 @@
 								"v1",
 								"prescriptions",
 								"new-prescription"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send-password-reset-verification-code",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"lateofrederick@yahoo.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/user/recover_password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"recover_password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify-password-reset-verification-code",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"code\": \"9CF3FA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/user/verify_code",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"verify_code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-user-password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"kumiJoseph@30298$\",\n    \"confirmPassword\": \"kumiJoseph@30298$\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/user/reset-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pharmacies",
+			"item": [
+				{
+					"name": "create-new-pharmacy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store_pin\": \"1334\",\n    \"name\": \"Mozay Pharmacy\",\n    \"description\": \"The best Pharmacy you will find around for any drugs you want\",\n    \"address\": \"George Bush Street\",\n    \"city\": \"Accra\",\n    \"licence_no\": \"AR040FA93\",\n    \"logo\": \"https://www.google.com\",\n    \"accept_nhis\": false,\n    \"gps_lat\": 92.00,\n    \"gps_lng\": 12.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/pharmacies/create-new-pharmacy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"pharmacies",
+								"create-new-pharmacy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add-new-drug-for-pharmacy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\",\n    \"name\": \"paracetamol\",\n    \"prize\": 1.0,\n    \"description\": \"serious paracetamol\",\n    \"dosage\": \"twice daily. one in the morning then one in the evening\",\n    \"quantity\": 1,\n    \"dosage_form\": \"tablet\",\n    \"manufacturer\": \"Ernest Chemist\",\n    \"views\": 1,\n    \"discount\": 0.20,\n    \"nhis\": 0,\n    \"images\": [\"https://www.google.com\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/pharmacy/drugs/add-new-drug",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"pharmacy",
+								"drugs",
+								"add-new-drug"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list-all-drugs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/pharmacy/drugs/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"pharmacy",
+								"drugs",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "search-for-drug",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"search_text\": \"Ernes\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/v1/pharmacy/drugs/drug-search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"v1",
+								"pharmacy",
+								"drugs",
+								"drug-search"
 							]
 						}
 					},

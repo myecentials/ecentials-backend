@@ -10,7 +10,7 @@ const favouritesSchema = new mongoose.Schema({
         required: true
     },
     item_id: {
-        type: Number,
+        type: mongoose.SchemaTypes.ObjectId,
         required: true
     },
     date_favoured: {
