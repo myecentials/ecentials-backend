@@ -23,7 +23,8 @@ router.get('/fetch-personal-details', verify, async (req, res) => {
     })
     return res.json({
         status: 200,
-        message: isUserPresent
+        message: "success",
+        data: isUserPresent
     })
 })
 
