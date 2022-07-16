@@ -45,7 +45,7 @@ const emailValidation = data => {
 //reset password validation 
 const passwordValidation = data => {
     const passwordschema = Joi.object({
-        // email: Joi.string().min(6).required().email().required(),
+        email: Joi.string().min(6).required().email().required(),
         password: passwordComplexity(complexityOptions).required(),
         confirmPassword: passwordComplexity(complexityOptions).required(),
     })
