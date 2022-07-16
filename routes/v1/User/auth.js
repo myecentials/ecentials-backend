@@ -88,8 +88,8 @@ router.post('/forgot-password', async (req, res) => {
 })
 
 //RESET PASSWORD
-router.post('/reset-password', verify,  async (req, res) => {
-    const user_id = req.user._id
+router.post('/reset-password', async (req, res) => {
+    const { email } = req.body;
     var password = req.body.password
     var confirmPassword = req.body.confirmPassword
 
@@ -99,14 +99,14 @@ router.post('/reset-password', verify,  async (req, res) => {
     if(error) return res.json({status: 400, message: error.details[0].message})
 
     //change the password 
-    const updatePassword = await User.updateOne({ _id: user_id }, {$set:{password: encryptPassword(confirmPassword)}})
+    const updatePassword = await User.updateOne({ email }, {$set:{password: encryptPassword(confirmPassword)}})
     if(updatePassword) return res.json({status: 200, message:"Password reset completed"})
+    return res.status(400).json({message: "Failed to reset password"})
 })
 
 
 // send email to user to start password reset process
-router.post('/recover_password', verify, async (req, res) => {
-    const user_id = req.user._id;
+router.post('/recover_password', async (req, res) => {
     const { email } = req.body;
     
     let code = `${uuid()}`.substring(0, 6).toUpperCase()
@@ -119,7 +119,7 @@ router.post('/recover_password', verify, async (req, res) => {
         // set the code sent to the user
         // this will be validated against to check if user has permission to change
         // password
-        RecoveryCode.create({ user_id, code }, (err, _) => {
+        RecoveryCode.create({ email, code }, (err, _) => {
             if (err) {
                 return res.status(400).json({ message: 'Something went wrong. Try again later' });
             }
@@ -134,15 +134,13 @@ router.post('/recover_password', verify, async (req, res) => {
 
 // verify password reset verification code sent to the user
 // to allow a user to change password.
-router.post('/verify_code', verify, async (req, res) => {
-    const  user_id  = req.user._id;
-
-    const { code } = req.body;
+router.post('/verify_code', async (req, res) => {
+    const { code, email } = req.body;
     
     const msInMinute = 60 * 1000;
     const current_date = new Date();
 
-    await RecoveryCode.findOne({ user_id, code }, { createdAt: 1, _id: 0 } , (err, result) => {
+    await RecoveryCode.findOne({ email, code }, { createdAt: 1, _id: 0 } , (err, result) => {
         if (err) {
             return res.status(400).json({ message: "Could not verify code. Please try again"})
         }
