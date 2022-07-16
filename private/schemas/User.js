@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema({
         gender: String, 
         address: String, 
         occupation: String, 
-        dob: Date,
+        dob: String,
         ghana_card_no: String,
         height: Number,
         weight: Number, 
