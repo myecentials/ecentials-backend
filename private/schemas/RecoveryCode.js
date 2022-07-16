@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const recoveryCode = new mongoose.Schema({
-    user_id: {
-        type: mongoose.SchemaTypes.ObjectId,
+    email: {
+        type: String,
         required: true
     },
     code: {
