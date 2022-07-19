@@ -15,7 +15,9 @@ router.get('/fetch-personal-details', verify, async (req, res) => {
     const isUserPresent = await User.findOne({
         _id: user_id
     }, {
-        personal: 1
+        personal: 1,
+        education: 1,
+        health: 1
     })
     if (!isUserPresent) return res.json({
         status: 400,
