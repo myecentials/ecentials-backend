@@ -209,7 +209,8 @@ router.get('/fetch-school-details', verify, async (req, res) => {
 
     return res.json({
         status: 200,
-        message: user.education
+        message: "success",
+        data: user.education
     })
 
 })
