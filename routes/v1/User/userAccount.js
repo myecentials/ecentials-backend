@@ -124,7 +124,7 @@ router.post('/add-school-details', verify, async (req, res) => {
 
     try {
         const schoolDataExists = await User.findOne({
-            user_id,
+            _id: user_id,
             education: {
                 $elemMatch: {
                     school_name: schoolname,
